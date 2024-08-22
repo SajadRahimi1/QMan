@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QMan.Domain", "QMan.Domain\QMan.Domain.csproj", "{3802250E-9649-465A-8449-B00A0272801C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QMan.Application", "QMan.Application\QMan.Application.csproj", "{AE8C3598-D43B-4002-98A3-711F7CD10BE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QMan.Infrastructure", "QMan.Infrastructure\QMan.Infrastructure.csproj", "{77A71FB6-B539-409B-88C4-B6C3BAD449EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QMan.Api", "QMan.Api\QMan.Api.csproj", "{CA89D218-473E-4020-B883-5B627CB8F908}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3802250E-9649-465A-8449-B00A0272801C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3802250E-9649-465A-8449-B00A0272801C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3802250E-9649-465A-8449-B00A0272801C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3802250E-9649-465A-8449-B00A0272801C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE8C3598-D43B-4002-98A3-711F7CD10BE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE8C3598-D43B-4002-98A3-711F7CD10BE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE8C3598-D43B-4002-98A3-711F7CD10BE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE8C3598-D43B-4002-98A3-711F7CD10BE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77A71FB6-B539-409B-88C4-B6C3BAD449EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77A71FB6-B539-409B-88C4-B6C3BAD449EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77A71FB6-B539-409B-88C4-B6C3BAD449EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77A71FB6-B539-409B-88C4-B6C3BAD449EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA89D218-473E-4020-B883-5B627CB8F908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA89D218-473E-4020-B883-5B627CB8F908}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA89D218-473E-4020-B883-5B627CB8F908}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA89D218-473E-4020-B883-5B627CB8F908}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
