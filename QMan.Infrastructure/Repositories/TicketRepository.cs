@@ -8,24 +8,26 @@ using QMan.Infrastructure.Interfaces;
 
 namespace QMan.Infrastructure.Repositories;
 
-public class TicketRepository(AppDbContext dbContext) : ITicketInterface
+public class TicketRepository(AppDbContext dbContext) : ITicketRepository
 {
     public async Task<BaseResponse> CreateTicket(CreateTicketDto dto)
     {
-        var ticket = dbContext.Tickets.AddAsync(new Ticket()
+        var ticket = new Ticket()
         {
             Subject = dto.Subject,
-        }).Result.Entity;
+        };
+        await dbContext.Tickets.AddAsync(ticket);
+        await dbContext.SaveChangesAsync();
 
         await dbContext.TicketMessages.AddAsync(new TicketMessage()
         {
             TicketId = ticket.Id,
             Message = dto.Message,
-            UserId = dto.UserId,
+            // UserId = dto.UserId,
             AttachmentLink = "",
         });
-
-        return new BaseResponse();
+        await dbContext.SaveChangesAsync();
+        return new BaseResponse() { Data = ticket };
     }
 
     public async Task<BaseResponse> GetAllTicket(PaginationBaseDto dto)
@@ -43,7 +45,7 @@ public class TicketRepository(AppDbContext dbContext) : ITicketInterface
     }
 
     public async Task<BaseResponse> NewTicketMessage(NewTicketMessageDto dto) =>
-        new ()
+        new()
         {
             Data = await dbContext.TicketMessages.AddAsync(new TicketMessage()
             {

@@ -25,7 +25,17 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "/home/sajad/RiderProjects/QMan/QMan.Application/QMan.Application.csproj": {
+                "projectPath": "/home/sajad/RiderProjects/QMan/QMan.Application/QMan.Application.csproj"
+              },
+              "/home/sajad/RiderProjects/QMan/QMan.Domain/QMan.Domain.csproj": {
+                "projectPath": "/home/sajad/RiderProjects/QMan/QMan.Domain/QMan.Domain.csproj"
+              },
+              "/home/sajad/RiderProjects/QMan/QMan.Infrastructure/QMan.Infrastructure.csproj": {
+                "projectPath": "/home/sajad/RiderProjects/QMan/QMan.Infrastructure/QMan.Infrastructure.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -42,13 +52,19 @@
               "target": "Package",
               "version": "[8.0.8, )"
             },
-            "Scalar.AspNetCore": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[1.1.2, )"
+              "version": "[8.0.8, )"
             },
             "Swashbuckle.AspNetCore.SwaggerGen": {
               "target": "Package",
               "version": "[6.7.1, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerUI": {
+              "target": "Package",
+              "version": "[6.7.3, )"
             }
           },
           "imports": [
@@ -66,6 +82,196 @@
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
             },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/sajad/RiderProjects/QMan/QMan.Application/QMan.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/sajad/RiderProjects/QMan/QMan.Application/QMan.Application.csproj",
+        "projectName": "QMan.Application",
+        "projectPath": "/home/sajad/RiderProjects/QMan/QMan.Application/QMan.Application.csproj",
+        "packagesPath": "/home/sajad/.nuget/packages/",
+        "outputPath": "/home/sajad/RiderProjects/QMan/QMan.Application/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/sajad/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/sajad/RiderProjects/QMan/QMan.Domain/QMan.Domain.csproj": {
+                "projectPath": "/home/sajad/RiderProjects/QMan/QMan.Domain/QMan.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Http": {
+              "target": "Package",
+              "version": "[2.2.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/sajad/RiderProjects/QMan/QMan.Domain/QMan.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/sajad/RiderProjects/QMan/QMan.Domain/QMan.Domain.csproj",
+        "projectName": "QMan.Domain",
+        "projectPath": "/home/sajad/RiderProjects/QMan/QMan.Domain/QMan.Domain.csproj",
+        "packagesPath": "/home/sajad/.nuget/packages/",
+        "outputPath": "/home/sajad/RiderProjects/QMan/QMan.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/sajad/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/sajad/RiderProjects/QMan/QMan.Infrastructure/QMan.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/sajad/RiderProjects/QMan/QMan.Infrastructure/QMan.Infrastructure.csproj",
+        "projectName": "QMan.Infrastructure",
+        "projectPath": "/home/sajad/RiderProjects/QMan/QMan.Infrastructure/QMan.Infrastructure.csproj",
+        "packagesPath": "/home/sajad/.nuget/packages/",
+        "outputPath": "/home/sajad/RiderProjects/QMan/QMan.Infrastructure/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/sajad/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/sajad/RiderProjects/QMan/QMan.Application/QMan.Application.csproj": {
+                "projectPath": "/home/sajad/RiderProjects/QMan/QMan.Application/QMan.Application.csproj"
+              },
+              "/home/sajad/RiderProjects/QMan/QMan.Domain/QMan.Domain.csproj": {
+                "projectPath": "/home/sajad/RiderProjects/QMan/QMan.Domain/QMan.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

@@ -6,7 +6,7 @@ public class Ticket : BaseEntity
 {
     public string? Subject { get; set; }
     public TicketStatus Status { get; set; } = TicketStatus.New;
-    public List<TicketMessage> Messages { get; set; } = new();
+    public IEnumerable<TicketMessage> Messages { get; } = new List<TicketMessage>();
 }
 
 public enum TicketStatus

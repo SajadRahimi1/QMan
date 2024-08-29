@@ -1,9 +1,12 @@
-using Scalar.AspNetCore;
+using QMan.Infrastructure.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddResponseCompression();
+builder.Services.AddResponseCaching();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -11,14 +14,12 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(options =>
-    {
-        options.RouteTemplate = "openapi/{documentName}.json";
-    });
-    
-    app.MapScalarApiReference();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 app.MapControllers();
+app.UseResponseCaching();
+app.UseResponseCompression();
 app.Run();

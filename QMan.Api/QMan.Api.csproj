@@ -6,16 +6,23 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <InvariantGlobalization>false</InvariantGlobalization>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.8" />
-        <PackageReference Include="Scalar.AspNetCore" Version="1.1.2" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.7.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.7.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
+      <ProjectReference Include="..\QMan.Application\QMan.Application.csproj" />
+      <ProjectReference Include="..\QMan.Domain\QMan.Domain.csproj" />
+      <ProjectReference Include="..\QMan.Infrastructure\QMan.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

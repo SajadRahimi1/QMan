@@ -4,7 +4,7 @@ using QMan.Domain.Entities.Base;
 
 namespace QMan.Infrastructure.Interfaces;
 
-public interface ITicketInterface
+public interface ITicketRepository
 {
     public Task<BaseResponse> CreateTicket(CreateTicketDto dto);
     public Task<BaseResponse> GetAllTicket(PaginationBaseDto dto);
