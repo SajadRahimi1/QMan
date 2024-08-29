@@ -1,5 +1,4 @@
 ### Domain Layer
-- Interfaces
 - Entities
 - Aggregates
 - Value Objects
@@ -13,15 +12,14 @@
 - Guards
 ---
 ### Application Layer:
-- Commands
-- Queries
+- Repositories
 - DTOs
 - Behaviors
 - Command Handlers
 - Query Handlers
 ---
 ### Infrastructure layer
-- Repositories
+- Interfaces
 - API Clients
 - File System Accessors
 - DbContext class

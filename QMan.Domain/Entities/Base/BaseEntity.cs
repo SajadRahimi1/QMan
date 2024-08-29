@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace QMan.Domain.Entities;
+namespace QMan.Domain.Entities.Base;
 
 public class BaseEntity
 {
