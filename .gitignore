@@ -20,9 +20,9 @@ nupkg/
 # Code Rush
 .cr/
 
-/QMan.Api/uploads
-/QMan.Api/uploads/Ticket
-/uploads
+QMan.Api/uploads/
+QMan.Api/uploads/Ticket/
+uploads/
 
 # User-specific files
 *.suo
