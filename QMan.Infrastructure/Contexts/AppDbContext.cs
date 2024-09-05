@@ -22,9 +22,23 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Ticket>().HasMany(t => t.Messages).WithOne(tm => tm.Ticket)
             .HasForeignKey(tm => tm.TicketId);
+    }
 
-        // modelBuilder.Entity<Ticket>().Property(t => t.Status).HasConversion(new EnumCollectionJsonValueConverter<TicketStatus>())
-        //     .Metadata.SetValueComparer(new CollectionValueComparer<TicketStatus>());
+    public override int SaveChanges()
+    {
+        var now = DateTime.UtcNow;
+
+        foreach (var entry in ChangeTracker.Entries()
+                     .Where(e => e.State is EntityState.Added or EntityState.Modified))
+        {
+            entry.Property("UpdatedAt").CurrentValue = now;
+
+            if (entry.State == EntityState.Added)
+            {
+                entry.Property("CreatedAt").CurrentValue = now;
+            }
+        }
+        return base.SaveChanges();
     }
 
     public DbSet<Ticket> Tickets { get; set; }

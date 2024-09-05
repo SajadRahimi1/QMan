@@ -11,7 +11,8 @@ public static class ApplicationServices
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services,IConfiguration configuration)
     {
-        services.AddTransient<ITicketRepository, TicketRepository>();
+        services.AddScoped<ITicketRepository, TicketRepository>();
+        services.AddSingleton<IFileRepository,FileRepository>();
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DbConnection")));
         return services;

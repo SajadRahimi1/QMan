@@ -1,4 +1,5 @@
 using QMan.Application.Dtos;
+using QMan.Application.Dtos.Base;
 using QMan.Application.Dtos.Ticket;
 using QMan.Domain.Entities.Base;
 

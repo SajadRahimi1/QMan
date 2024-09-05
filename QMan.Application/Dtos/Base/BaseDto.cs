@@ -4,5 +4,5 @@ namespace QMan.Application.Dtos.Base;
 
 public class BaseDto
 {
-    [JsonIgnore] public int UserId { get; set; }
+    [JsonIgnore] public int? UserId { get; set; }
 }

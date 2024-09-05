@@ -1,13 +1,14 @@
+using System.ComponentModel.DataAnnotations;
 using QMan.Domain.Entities.Base;
 
 namespace QMan.Domain.Entities.User;
 
 public class User:BaseEntity
 {
-    public string? Name { get; set; }
-    public string? PhoneNumber { get; set; }
-    public string? Address { get; set; }
-    public string? Telegram { get; set; }
-    public string? Instagram { get; set; }
-    public string? Website { get; set; }
+   [MaxLength(150)] public string? Name { get; set; }
+   [MaxLength(11)] public string? PhoneNumber { get; set; }
+   [MaxLength(300)] public string? Address { get; set; }
+   [MaxLength(50)] public string? Telegram { get; set; }
+   [MaxLength(50)] public string? Instagram { get; set; }
+   [MaxLength(100)] public string? Website { get; set; }
 }
