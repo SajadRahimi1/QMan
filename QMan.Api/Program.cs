@@ -37,4 +37,5 @@ app.UseStaticFiles(new StaticFileOptions()
 app.MapControllers();
 app.UseResponseCaching();
 app.UseResponseCompression();
+app.UseAuthentication();
 app.Run();

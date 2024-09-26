@@ -25,4 +25,8 @@
       <ProjectReference Include="..\QMan.Infrastructure\QMan.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="uploads\Ticket\" />
+    </ItemGroup>
+
 </Project>

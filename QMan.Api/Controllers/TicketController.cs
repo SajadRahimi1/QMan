@@ -28,7 +28,6 @@ public class TicketController(ITicketRepository ticketRepository) : ControllerBa
     [HttpPost, Consumes("multipart/form-data")]
     public async Task<IActionResult> NewTicketMessage([FromForm] NewTicketMessageDto dto)
     {
-        dto.Status = TicketStatus.UserWaiting;
         return new BaseResult(await ticketRepository.NewTicketMessage(dto));
     }
 }

@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using QMan.Domain.Entities.Admin;
+using QMan.Domain.Entities.Comment;
 using QMan.Domain.Entities.Ticket;
 using QMan.Domain.Entities.User;
 using QMan.Infrastructure.Helpers;
@@ -19,6 +21,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Ticket>().HasKey(ticket => ticket.Id);
         modelBuilder.Entity<TicketMessage>().HasKey(ticketMessage => ticketMessage.Id);
         modelBuilder.Entity<User>().HasKey(u => u.Id);
+        modelBuilder.Entity<Admin>().HasKey(u => u.Id);
+        modelBuilder.Entity<Comment>().HasKey(u => u.Id);
 
         modelBuilder.Entity<Ticket>().HasMany(t => t.Messages).WithOne(tm => tm.Ticket)
             .HasForeignKey(tm => tm.TicketId);
@@ -44,4 +48,6 @@ public class AppDbContext : DbContext
     public DbSet<Ticket> Tickets { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<TicketMessage> TicketMessages { get; set; }
+    public DbSet<Admin> Admins { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 }
