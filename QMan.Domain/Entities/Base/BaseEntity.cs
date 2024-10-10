@@ -6,7 +6,7 @@ namespace QMan.Domain.Entities.Base;
 public class BaseEntity
 {
     [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; }
+    public int Id { get; set; }
 
     public DateTime? CreatedDateTime { get; set; }=DateTime.Now;
     

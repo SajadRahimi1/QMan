@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using QMan.Application.Dtos.Base;
 using QMan.Infrastructure.Contexts;
 using QMan.Infrastructure.Interfaces;
 using QMan.Infrastructure.Repositories;
@@ -39,7 +40,9 @@ public static class ApplicationServices
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
             };
         });
-        
+        ConfigurationModel.Instance.JwtToken = configuration["Jwt:Key"]??"";
+        ConfigurationModel.Instance.Audience = configuration["Jwt:Audience"]??"";
+        ConfigurationModel.Instance.Issuer = configuration["Jwt:Issuer"]??"";
         return services;
     }
 

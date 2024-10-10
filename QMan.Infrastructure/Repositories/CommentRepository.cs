@@ -16,14 +16,23 @@ public class CommentRepository(AppDbContext dbContext) : ICommentRepository
     public async Task<BaseResponse> GetAllComment(PaginationBaseDto dto)
     {
         var skip = (dto.PageNumber - 1) * dto.PageSize;
-        var comments = await dbContext.Comments.AsNoTracking().Skip(skip).Take(dto.PageSize).ToListAsync();
+        var comments = await dbContext.Comments.Include(c => c.Business).AsSplitQuery().AsNoTracking().Skip(skip)
+            .Take(dto.PageSize).Select(c => new
+            {
+                CommentId = c.Id,
+                c.Business.Title,
+                BusinessId = c.Business.Id,
+                c.UpdateDateTime,
+                c.ShowInHome
+            }).ToListAsync();
 
         return new BaseResponse() { Data = comments };
     }
 
     public async Task<BaseResponse> GetCommentText(int commentId)
     {
-        var comment = await dbContext.Comments.SingleOrDefaultAsync(c => c.Id == commentId);
+        var comment = await dbContext.Comments.Include(c => c.Business).AsSplitQuery()
+            .SingleOrDefaultAsync(c => c.Id == commentId);
         return comment is null ? new BaseResponse() { StatusCode = 404 } : new BaseResponse() { Data = comment };
     }
 

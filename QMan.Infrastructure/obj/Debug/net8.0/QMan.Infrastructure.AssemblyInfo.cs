@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QMan.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95588574eb5d47c7aacbd9e271a26bfeb0d42a70")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+866e4942538965d45c86695e6ce72f12bd4408a6")]
 [assembly: System.Reflection.AssemblyProductAttribute("QMan.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QMan.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

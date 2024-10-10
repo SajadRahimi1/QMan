@@ -5,6 +5,7 @@ namespace QMan.Domain.Entities.Comment;
 public class Comment:BaseEntity
 {
     public string Text { get; set; }
-    // later: connect to business 
+    public int? BusinessId { get; set; }
+    public Business.Business Business { get; set; }
     public bool ShowInHome { get; set; } = false;
 }

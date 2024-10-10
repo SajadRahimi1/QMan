@@ -31,24 +31,33 @@ public class TicketRepository(AppDbContext dbContext, IFileRepository fileReposi
             UserId = dto.UserId,
             AttachmentLink = dto.Attachment is null ? null : await fileRepository.SaveFileAsync(dto.Attachment, Section)
         });
-        
+
         await dbContext.SaveChangesAsync();
-        
+
         return new BaseResponse() { Data = ticket };
     }
 
     public async Task<BaseResponse> GetAllTicket(PaginationBaseDto dto)
     {
         var skip = (dto.PageNumber - 1) * dto.PageSize;
-        var ticket = await dbContext.Tickets.AsNoTracking().Skip(skip).Take(dto.PageSize).ToListAsync();
+        var ticket = await dbContext.Tickets.Include(b => b.Business).AsSplitQuery().AsNoTracking().Skip(skip)
+            .Take(dto.PageSize).Select(t => new
+            {
+                t.Id,
+                t.BusinessId,
+                t.Business.Title,
+                t.Status,
+                t.UpdateDateTime,
+            }).ToListAsync();
 
         return new BaseResponse() { Data = ticket };
     }
 
     public async Task<BaseResponse> GetTicketMessages(int ticketId)
         => new()
-        {
+        {   
             Data = await dbContext.Tickets.AsNoTracking().Where(t => t.Id == ticketId).Include(t => t.Messages)
+                .Include(t => t.Business)
                 .ToListAsync()
         };
 
