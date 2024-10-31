@@ -20,6 +20,7 @@ public static class ApplicationServices
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddScoped<ITicketRepository, TicketRepository>();
         services.AddSingleton<IFileRepository,FileRepository>();
+        services.AddMemoryCache();
         services.AddSingleton<ICacheService,MemoryCacheService>();
         services.AddScoped<IAdminRepository, AdminRepository>();
         // services.AddScoped<IBusinessRepository, Busin>();
@@ -30,8 +31,6 @@ public static class ApplicationServices
         //services.AddScoped<IProductRepository, ProductRe>();
 
         #region Register JWT
-        services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DbConnection")));
 
         services.AddAuthentication(options =>
         {

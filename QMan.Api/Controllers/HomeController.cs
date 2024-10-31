@@ -5,8 +5,8 @@ using QMan.Application.Interfaces;
 
 namespace QMan.Api.Controllers;
 
-[ApiController, Route("[controller]/[action]")]
-public class HomeController(IContactUsRepository contactUsRepository) : ControllerBase
+
+public class HomeController(IContactUsRepository contactUsRepository) : BaseController
 {
     [HttpPost]
     public IActionResult NewContactUs([FromQuery] NewContactUsDto dto) =>

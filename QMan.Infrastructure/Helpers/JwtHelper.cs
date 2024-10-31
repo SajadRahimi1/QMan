@@ -35,8 +35,9 @@ public static class JwtHelper
         return tokenHandler.WriteToken(token);
     }
 
-    public static UserJwtModel GetUser(string token)
+    public static UserJwtModel? GetUser(string? token)
     {
+        if (token is null) return null;
         var user = new UserJwtModel();
         var handler = new JwtSecurityTokenHandler();
         var jwtSecurityToken = handler.ReadJwtToken(token);

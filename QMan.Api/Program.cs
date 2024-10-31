@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using QMan.Infrastructure.Contexts;
 using QMan.Infrastructure.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,8 @@ builder.Services.AddControllers()
 builder.Services.AddResponseCompression();
 builder.Services.AddResponseCaching();
 
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(configs =>
@@ -37,7 +41,7 @@ builder.Services.AddSwaggerGen(configs =>
                     Id = "Bearer"
                 }
             },
-            new string[] { }
+            []
         }
     });
 });

@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using QMan.Application.Dtos.Business;
+using QMan.Application.Dtos.Login;
 using QMan.Application.Dtos.Product;
 using QMan.Application.Interfaces;
 using QMan.Application.Services.Cache;
@@ -36,25 +37,28 @@ public class BusinessRepository(AppDbContext appDbContext, IMapper mapper, ICach
         return new BaseResponse();
     }
 
-    public Task<BaseResponse> SendCode(string phoneNumber)
+    public Task<BaseResponse> SendCode(SendCodeDto dto)
     {
         var code = new Random().Next(0, 9999);
-        cacheService.Set(phoneNumber, code.ToString(), TimeSpan.FromMinutes(3));
+        Console.Write(code.ToString());
+        cacheService.Set(dto.PhoneNumber, code.ToString(), TimeSpan.FromMinutes(3));
 
         // todo: send code to sms provider
         return Task.FromResult(new BaseResponse());
     }
 
-    public BaseResponse CheckCode(string phoneNumber, string code)
+    public BaseResponse CheckCode(CheckCodeDto dto)
     {
-        var savedCode = cacheService.Get<string>(phoneNumber);
-        if (savedCode != code)
+        var savedCode = cacheService.Get<string>(dto.PhoneNumber);
+        if (savedCode != dto.Code)
             return new BaseResponse()
-                { StatusCode = 406, MessageSetter = "لطفا دوباره برای ارسال کد تلاش کنید" };
+                { StatusCode = 406, MessageSetter = "کد اشتباه است" };
 
-        var business = appDbContext.Businesses.Add(new Business() { PhoneNumber = phoneNumber });
+        var business = appDbContext.Businesses.FirstOrDefault(b => b.PhoneNumber == dto.PhoneNumber) ??
+                       appDbContext.Businesses.Add(new Business() { PhoneNumber = dto.PhoneNumber }).Entity;
+
         appDbContext.SaveChanges();
-        return new BaseResponse() { Data = business.Entity.Id };
+        return new BaseResponse() { Data = business.Id };
     }
 
     public async Task<BaseResponse> UpdateInformation(UpdateBusinessDto dto)
