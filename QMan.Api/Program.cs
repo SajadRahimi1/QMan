@@ -13,6 +13,7 @@ builder.Services.AddControllers()
 builder.Services.AddResponseCompression();
 builder.Services.AddResponseCaching();
 
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(configs =>
 {
@@ -23,6 +24,8 @@ builder.Services.AddSwaggerGen(configs =>
         Name = "Authorization",
         Type = SecuritySchemeType.ApiKey
     });
+    
+    
     configs.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {

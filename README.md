@@ -12,22 +12,22 @@
 - Guards
 ---
 ### Application Layer:
-- Repositories
+- Interfaces
 - DTOs
 - Behaviors
 - Command Handlers
 - Query Handlers
----
-### Infrastructure layer
-- Interfaces
-- API Clients
-- File System Accessors
-- DbContext class
 - SMTP Implementations
 - SMS Implementations
 - System Clock
 - Cached repositories
 - Other Services
+---
+### Infrastructure layer
+- Repositories
+- API Clients
+- File System Accessors
+- DbContext class
 ---
 ### Api Layer
 - Controllers

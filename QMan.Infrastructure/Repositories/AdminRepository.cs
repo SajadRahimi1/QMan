@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using QMan.Application.Dtos.Admin;
 using QMan.Application.Dtos.Base;
 using QMan.Application.Dtos.Business;
+using QMan.Application.Interfaces;
 using QMan.Domain.Entities.Admin;
 using QMan.Domain.Entities.Base;
 using QMan.Domain.Entities.Business;
 using QMan.Infrastructure.Contexts;
-using QMan.Infrastructure.Interfaces;
 
 namespace QMan.Infrastructure.Repositories;
 
@@ -100,10 +100,10 @@ public class AdminRepository
             return new BaseResponse() { StatusCode = 404 };
         }
 
-        var address = mapper.Map<Address>(dto.Address);
-        address.BusinessId = business.Id;
-        address.Id = business.Address.Id;
-        appDbContext.Addresses.Update(address);
+        // var address = mapper.Map<Address>(dto.Address);
+        // address.BusinessId = business.Id;
+        // address.Id = business.Address.Id;
+        // appDbContext.Addresses.Update(address);
         //todo: update business properties
         return new BaseResponse() { StatusCode = 500 };
     }

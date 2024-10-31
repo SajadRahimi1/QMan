@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using QMan.Application.Dtos.Base;
+using QMan.Application.Interfaces;
 using QMan.Domain.Entities.Base;
 using QMan.Infrastructure.Contexts;
-using QMan.Infrastructure.Interfaces;
 
 namespace QMan.Infrastructure.Repositories;
 

@@ -3,7 +3,7 @@ using QMan.Application.Dtos.Base;
 using QMan.Application.Dtos.Business;
 using QMan.Domain.Entities.Base;
 
-namespace QMan.Infrastructure.Interfaces;
+namespace QMan.Application.Interfaces;
 
 public interface IAdminRepository
 {

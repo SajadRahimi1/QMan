@@ -6,13 +6,14 @@ using QMan.Application.Dtos.Admin;
 using QMan.Application.Dtos.Base;
 using QMan.Application.Dtos.Business;
 using QMan.Application.Dtos.Ticket;
+using QMan.Application.Interfaces;
 using QMan.Infrastructure.Helpers;
-using QMan.Infrastructure.Interfaces;
 
 namespace QMan.Api.Controllers;
 
 [ApiController(), Route("[controller]/[action]"), Authorize(Roles = "Admin")]
-public class AdminController(IAdminRepository adminRepository, ITicketRepository ticketRepository,ICommentRepository commentRepository) : ControllerBase
+public class AdminController(IAdminRepository adminRepository, ITicketRepository ticketRepository,
+    ICommentRepository commentRepository) : ControllerBase
 {
     #region Ticket
 
@@ -21,7 +22,7 @@ public class AdminController(IAdminRepository adminRepository, ITicketRepository
         new BaseResult(await ticketRepository.GetAllTicket(dto));
 
     [HttpPost]
-    public async Task<IActionResult> GetAllTickets([FromBody] ChangeTicketStatusDto dto) =>
+    public async Task<IActionResult> ChangeTicketStatus([FromBody] ChangeTicketStatusDto dto) =>
         new BaseResult(await ticketRepository.ChangeTicketStatus(dto));
 
 
@@ -33,7 +34,7 @@ public class AdminController(IAdminRepository adminRepository, ITicketRepository
     [HttpPost, Consumes("multipart/form-data")]
     public async Task<IActionResult> NewTicketMessage([FromBody] NewTicketMessageDto dto)
     {
-        var userModel = JwtHelper.GetUser(await HttpContext.GetTokenAsync("access_token"));
+        var userModel = JwtHelper.GetUser(await HttpContext.GetTokenAsync("access_token") ?? "");
         dto.UserRole = userModel.Role;
         dto.UserId = userModel.UserId;
         return new BaseResult(await ticketRepository.NewTicketMessage(dto));
@@ -58,15 +59,15 @@ public class AdminController(IAdminRepository adminRepository, ITicketRepository
     #endregion
 
     #region Comments
-    
+
     [HttpPost]
     public async Task<IActionResult> GetAllComments([FromBody] PaginationBaseDto dto) =>
         new BaseResult(await commentRepository.GetAllComment(dto));
-    
+
     [HttpPatch]
     public async Task<IActionResult> ChangeCommentStatus([FromQuery] int commentId) =>
         new BaseResult(await commentRepository.ChangeCommentStatus(commentId));
-    
+
     [HttpGet]
     public async Task<IActionResult> GetCommentText([FromQuery] int commentId) =>
         new BaseResult(await commentRepository.GetCommentText(commentId));
@@ -78,23 +79,26 @@ public class AdminController(IAdminRepository adminRepository, ITicketRepository
     [HttpPost]
     public async Task<IActionResult> GetAllBusiness([FromBody] PaginationBaseDto dto) =>
         new BaseResult(await adminRepository.GetAllBusiness(dto));
-    
+
     [HttpGet]
     public async Task<IActionResult> GetBusinessInformation([FromQuery] int businessId) =>
         new BaseResult(await adminRepository.GetBusinessInfo(businessId));
-    
+
     [HttpPut]
     public async Task<IActionResult> UpdateBusiness([FromBody] UpdateBusinessDto dto) =>
         new BaseResult(await adminRepository.UpdateBusiness(dto));
 
     #endregion
 
+    #region Test Token
 
     [HttpGet, AllowAnonymous]
     public IActionResult GetToken() =>
         Ok(JwtHelper.GenerateToken(new UserJwtModel() { UserId = 1, Role = UserRole.Admin }));
 
-    [HttpGet, AllowAnonymous]   
+    [HttpGet, AllowAnonymous]
     public IActionResult TranslateToken([FromQuery] string token) =>
         Ok(JwtHelper.GetUser(token));
+
+    #endregion
 }

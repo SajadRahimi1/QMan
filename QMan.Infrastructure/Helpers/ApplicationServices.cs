@@ -6,8 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using QMan.Application.Dtos.Base;
+using QMan.Application.Interfaces;
+using QMan.Application.Services.Cache;
 using QMan.Infrastructure.Contexts;
-using QMan.Infrastructure.Interfaces;
 using QMan.Infrastructure.Repositories;
 
 namespace QMan.Infrastructure.Helpers;
@@ -19,7 +20,16 @@ public static class ApplicationServices
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddScoped<ITicketRepository, TicketRepository>();
         services.AddSingleton<IFileRepository,FileRepository>();
+        services.AddSingleton<ICacheService,MemoryCacheService>();
         services.AddScoped<IAdminRepository, AdminRepository>();
+        // services.AddScoped<IBusinessRepository, Busin>();
+        services.AddScoped<ICommentRepository, CommentRepository>();
+        services.AddScoped<IContactUsRepository, ContactUsRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IBusinessRepository, BusinessRepository>();
+        //services.AddScoped<IProductRepository, ProductRe>();
+
+        #region Register JWT
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DbConnection")));
 
@@ -43,6 +53,8 @@ public static class ApplicationServices
         ConfigurationModel.Instance.JwtToken = configuration["Jwt:Key"]??"";
         ConfigurationModel.Instance.Audience = configuration["Jwt:Audience"]??"";
         ConfigurationModel.Instance.Issuer = configuration["Jwt:Issuer"]??"";
+        #endregion
+        
         return services;
     }
 

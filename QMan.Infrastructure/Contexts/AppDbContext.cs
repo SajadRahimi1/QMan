@@ -3,9 +3,10 @@ using QMan.Domain.Entities.Admin;
 using QMan.Domain.Entities.Business;
 using QMan.Domain.Entities.Category;
 using QMan.Domain.Entities.Comment;
+using QMan.Domain.Entities.ContactUs;
+using QMan.Domain.Entities.Otp;
+using QMan.Domain.Entities.Product;
 using QMan.Domain.Entities.Ticket;
-using QMan.Domain.Entities.User;
-using QMan.Infrastructure.Helpers;
 
 namespace QMan.Infrastructure.Contexts;
 
@@ -22,13 +23,15 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Ticket>().HasKey(ticket => ticket.Id);
         modelBuilder.Entity<TicketMessage>().HasKey(ticketMessage => ticketMessage.Id);
-        modelBuilder.Entity<User>().HasKey(u => u.Id);
         modelBuilder.Entity<Admin>().HasKey(u => u.Id);
         modelBuilder.Entity<Comment>().HasKey(u => u.Id);
         modelBuilder.Entity<Address>().HasKey(u => u.Id);
         modelBuilder.Entity<Business>().HasKey(u => u.Id);
         modelBuilder.Entity<Category>().HasKey(u => u.Id);
         modelBuilder.Entity<SubCategory>().HasKey(u => u.Id);
+        modelBuilder.Entity<ContactUs>().HasKey(u => u.Id);
+        modelBuilder.Entity<Product>().HasKey(u => u.Id);
+        modelBuilder.Entity<Otp>().HasKey(u => u.Id);
 
         modelBuilder.Entity<Ticket>().HasMany(t => t.Messages).WithOne(tm => tm.Ticket)
             .HasForeignKey(tm => tm.TicketId);
@@ -42,6 +45,13 @@ public class AppDbContext : DbContext
             .HasForeignKey(c => c.BusinessId);
         modelBuilder.Entity<Business>().HasMany<Ticket>(b => b.Tickets).WithOne(t => t.Business)
             .HasForeignKey(t => t.BusinessId);
+        modelBuilder.Entity<Product>().HasOne(p => p.SubCategory).WithMany(c => c.Products)
+            .HasForeignKey(p => p.SubcategoryId);
+        modelBuilder.Entity<Product>().HasOne(p => p.Business).WithMany(c => c.Products)
+            .HasForeignKey(p => p.BusinessId);
+        modelBuilder.Entity<BaseProduct>().HasOne(p => p.SubCategory).WithMany(c => c.BaseProducts)
+            .HasForeignKey(p => p.SubcategoryId);
+        modelBuilder.Entity<BaseProduct>().HasMany(p => p.Businesses).WithMany(b => b.BaseProducts);
     }
 
     public override int SaveChanges()
@@ -51,11 +61,11 @@ public class AppDbContext : DbContext
         foreach (var entry in ChangeTracker.Entries()
                      .Where(e => e.State is EntityState.Added or EntityState.Modified))
         {
-            entry.Property("UpdatedAt").CurrentValue = now;
+            entry.Property("UpdateDateTime").CurrentValue = now;
 
             if (entry.State == EntityState.Added)
             {
-                entry.Property("CreatedAt").CurrentValue = now;
+                entry.Property("CreatedDateTime").CurrentValue = now;
             }
         }
 
@@ -63,7 +73,6 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Ticket> Tickets { get; set; }
-    public DbSet<User> Users { get; set; }
     public DbSet<TicketMessage> TicketMessages { get; set; }
     public DbSet<Admin> Admins { get; set; }
     public DbSet<Comment> Comments { get; set; }
@@ -71,4 +80,8 @@ public class AppDbContext : DbContext
     public DbSet<Address> Addresses { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<SubCategory> SubCategories { get; set; }
+    public DbSet<ContactUs> ContactUs { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<BaseProduct> BaseProducts { get; set; }
+    public DbSet<Otp> Otps { get; set; }
 }

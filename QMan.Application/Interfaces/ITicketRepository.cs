@@ -1,9 +1,8 @@
-using QMan.Application.Dtos;
 using QMan.Application.Dtos.Base;
 using QMan.Application.Dtos.Ticket;
 using QMan.Domain.Entities.Base;
 
-namespace QMan.Infrastructure.Interfaces;
+namespace QMan.Application.Interfaces;
 
 public interface ITicketRepository
 {

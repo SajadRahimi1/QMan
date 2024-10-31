@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace QMan.Infrastructure.Interfaces;
+namespace QMan.Application.Interfaces;
 
 public interface IFileRepository
 {

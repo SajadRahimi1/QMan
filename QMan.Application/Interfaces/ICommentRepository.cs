@@ -1,7 +1,7 @@
 using QMan.Application.Dtos.Base;
 using QMan.Domain.Entities.Base;
 
-namespace QMan.Infrastructure.Interfaces;
+namespace QMan.Application.Interfaces;
 
 public interface ICommentRepository
 {

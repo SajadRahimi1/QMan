@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using QMan.Infrastructure.Interfaces;
+using QMan.Application.Interfaces;
 
 namespace QMan.Infrastructure.Repositories;
 

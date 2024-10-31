@@ -2,10 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using QMan.Application.Dtos;
 using QMan.Application.Dtos.Base;
 using QMan.Application.Dtos.Ticket;
+using QMan.Application.Interfaces;
 using QMan.Domain.Entities.Base;
 using QMan.Domain.Entities.Ticket;
 using QMan.Infrastructure.Contexts;
-using QMan.Infrastructure.Interfaces;
 
 namespace QMan.Infrastructure.Repositories;
 

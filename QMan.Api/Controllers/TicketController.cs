@@ -3,12 +3,12 @@ using QMan.Api.Base;
 using QMan.Application.Dtos;
 using QMan.Application.Dtos.Base;
 using QMan.Application.Dtos.Ticket;
+using QMan.Application.Interfaces;
 using QMan.Domain.Entities.Ticket;
-using QMan.Infrastructure.Interfaces;
 
 namespace QMan.Api.Controllers;
 
-[ApiController(), Route("[controller]/[action]")]
+[ApiController, Route("[controller]/[action]")]
 public class TicketController(ITicketRepository ticketRepository) : ControllerBase
 {
     [HttpGet]
