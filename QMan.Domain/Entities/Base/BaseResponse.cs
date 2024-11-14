@@ -1,5 +1,3 @@
-using QMan.Infrastructure.Helpers;
-
 namespace QMan.Domain.Entities.Base;
 
 public class BaseResponse

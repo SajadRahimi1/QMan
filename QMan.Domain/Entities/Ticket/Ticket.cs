@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using QMan.Domain.Entities.Base;
 
 namespace QMan.Domain.Entities.Ticket;
@@ -9,7 +10,7 @@ public class Ticket : BaseEntity
     public TicketStatus Status { get; set; } = TicketStatus.Support;
     public IEnumerable<TicketMessage> Messages { get; } = new List<TicketMessage>();
     public int BusinessId { get; set; }
-    public Business.Business Business { get; set; }
+  [JsonIgnore]  public Business.Business Business { get; set; }
 }
 
 public enum TicketStatus

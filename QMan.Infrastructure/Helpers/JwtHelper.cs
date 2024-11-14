@@ -26,7 +26,7 @@ public static class JwtHelper
             },
             Audience = ConfigurationModel.Instance.Audience,
             Issuer = ConfigurationModel.Instance.Issuer,
-            // Expires = DateTime.UtcNow.AddDays(7),
+            Expires = DateTime.UtcNow.AddDays(7),
             SigningCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.ASCII.GetBytes(ConfigurationModel.Instance.JwtToken)),
                 SecurityAlgorithms.HmacSha256Signature)
@@ -37,7 +37,7 @@ public static class JwtHelper
 
     public static UserJwtModel? GetUser(string? token)
     {
-        if (token is null) return null;
+        if (string.IsNullOrWhiteSpace(token)) return null;
         var user = new UserJwtModel();
         var handler = new JwtSecurityTokenHandler();
         var jwtSecurityToken = handler.ReadJwtToken(token);

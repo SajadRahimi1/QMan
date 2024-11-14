@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QMan.Domain.Entities.Admin;
 using QMan.Domain.Entities.Business;
 using QMan.Domain.Entities.Category;
@@ -6,6 +7,7 @@ using QMan.Domain.Entities.Comment;
 using QMan.Domain.Entities.ContactUs;
 using QMan.Domain.Entities.Otp;
 using QMan.Domain.Entities.Product;
+using QMan.Domain.Entities.Theme;
 using QMan.Domain.Entities.Ticket;
 
 namespace QMan.Infrastructure.Contexts;
@@ -20,7 +22,7 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-
+      
         modelBuilder.Entity<Ticket>().HasKey(ticket => ticket.Id);
         modelBuilder.Entity<TicketMessage>().HasKey(ticketMessage => ticketMessage.Id);
         modelBuilder.Entity<Admin>().HasKey(u => u.Id);
@@ -32,6 +34,9 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<ContactUs>().HasKey(u => u.Id);
         modelBuilder.Entity<Product>().HasKey(u => u.Id);
         modelBuilder.Entity<Otp>().HasKey(u => u.Id);
+        modelBuilder.Entity<Access>().HasKey(u => u.Id);
+        modelBuilder.Entity<Theme>().HasKey(u => u.Id);
+        modelBuilder.Entity<ThemeColor>().HasKey(u => u.Id);
 
         modelBuilder.Entity<Ticket>().HasMany(t => t.Messages).WithOne(tm => tm.Ticket)
             .HasForeignKey(tm => tm.TicketId);
@@ -52,6 +57,9 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<BaseProduct>().HasOne(p => p.SubCategory).WithMany(c => c.BaseProducts)
             .HasForeignKey(p => p.SubcategoryId);
         modelBuilder.Entity<BaseProduct>().HasMany(p => p.Businesses).WithMany(b => b.BaseProducts);
+        modelBuilder.Entity<Access>().HasMany(p => p.Admins).WithMany(b => b.Access);
+        modelBuilder.Entity<Theme>().HasMany(t => t.ThemeColors).WithOne(tc => tc.Theme)
+            .HasForeignKey(tc => tc.ThemeId);
     }
 
     public override int SaveChanges()
@@ -84,4 +92,5 @@ public class AppDbContext : DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<BaseProduct> BaseProducts { get; set; }
     public DbSet<Otp> Otps { get; set; }
+    public DbSet<Access> Accesses { get; set; }
 }

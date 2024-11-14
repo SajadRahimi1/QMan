@@ -9,9 +9,11 @@ public class Business : BaseEntity
     [MaxLength(100)] public string? ManagerName { get; set; }
     [MaxLength(11)] public string? PhoneNumber { get; set; }
     [MaxLength(11)] public string? ContactNumber { get; set; }
+    [MaxLength(50)] public string? SelectedTheme { get; set; }
+    [MaxLength(50)] public string? SelectedColor { get; set; }
     public Address? Address { get; set; }
-    public List<Comment.Comment> Comments { get; set; }=[];
-    public List<Ticket.Ticket> Tickets { get; set; }=[];
-    public List<Product.Product> Products { get; set; }=[];
-    public List<Product.BaseProduct> BaseProducts { get; set; }=[];
+    public List<Comment.Comment> Comments { get; set; } = [];
+    public List<Ticket.Ticket> Tickets { get; set; } = [];
+    public List<Product.Product> Products { get; set; } = [];
+    public List<Product.BaseProduct> BaseProducts { get; set; } = [];
 }

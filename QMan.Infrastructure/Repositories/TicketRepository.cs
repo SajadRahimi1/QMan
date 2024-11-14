@@ -4,6 +4,7 @@ using QMan.Application.Dtos.Base;
 using QMan.Application.Dtos.Ticket;
 using QMan.Application.Interfaces;
 using QMan.Domain.Entities.Base;
+using QMan.Domain.Entities.Business;
 using QMan.Domain.Entities.Ticket;
 using QMan.Infrastructure.Contexts;
 
@@ -18,9 +19,10 @@ public class TicketRepository(AppDbContext dbContext, IFileRepository fileReposi
         var ticket = new Ticket()
         {
             Subject = dto.Subject,
+            BusinessId = dto.UserId ?? 0,
         };
 
-        await dbContext.Tickets.AddAsync(ticket);
+        dbContext.Tickets.Add(ticket);
         await dbContext.SaveChangesAsync();
 
 
@@ -28,7 +30,7 @@ public class TicketRepository(AppDbContext dbContext, IFileRepository fileReposi
         {
             TicketId = ticket.Id,
             Message = dto.Message,
-            UserId = dto.UserId,
+            BusinessId = dto.UserId,
             AttachmentLink = dto.Attachment is null ? null : await fileRepository.SaveFileAsync(dto.Attachment, Section)
         });
 
@@ -40,14 +42,16 @@ public class TicketRepository(AppDbContext dbContext, IFileRepository fileReposi
     public async Task<BaseResponse> GetAllTicket(PaginationBaseDto dto)
     {
         var skip = (dto.PageNumber - 1) * dto.PageSize;
-        var ticket = await dbContext.Tickets.Include(b => b.Business).AsSplitQuery().AsNoTracking().Skip(skip)
+        var ticket = await dbContext.Tickets.AsSplitQuery().Include(b => b.Business).AsSplitQuery().AsNoTracking()
+            .Skip(skip)
             .Take(dto.PageSize).Select(t => new
             {
                 t.Id,
                 t.BusinessId,
-                t.Business.Title,
+                BusinessTitle = t.Business.Title,
                 t.Status,
-                t.UpdateDateTime,
+                t.Subject,
+                UpdateDateTime = t.UpdateDateTime ?? t.CreatedDateTime,
             }).ToListAsync();
 
         return new BaseResponse() { Data = ticket };
@@ -55,8 +59,9 @@ public class TicketRepository(AppDbContext dbContext, IFileRepository fileReposi
 
     public async Task<BaseResponse> GetTicketMessages(int ticketId)
         => new()
-        {   
-            Data = await dbContext.Tickets.AsNoTracking().Where(t => t.Id == ticketId).Include(t => t.Messages)
+        {
+            Data = await dbContext.Tickets.AsNoTracking().AsSplitQuery().Where(t => t.Id == ticketId)
+                .Include(t => t.Messages)
                 .Include(t => t.Business)
                 .ToListAsync()
         };
@@ -68,7 +73,8 @@ public class TicketRepository(AppDbContext dbContext, IFileRepository fileReposi
         {
             TicketId = dto.TicketId,
             Message = dto.Message,
-            UserId = dto.UserId,
+            BusinessId = dto.UserRole == UserRole.Business ? dto.UserId : null,
+            AdminId = dto.UserRole == UserRole.Admin ? dto.UserId : null,
             AttachmentLink = dto.Attachment is null ? null : await fileRepository.SaveFileAsync(dto.Attachment, Section)
         });
         await dbContext.SaveChangesAsync();

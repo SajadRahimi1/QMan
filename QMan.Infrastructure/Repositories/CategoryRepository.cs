@@ -8,11 +8,14 @@ using QMan.Infrastructure.Contexts;
 
 namespace QMan.Infrastructure.Repositories;
 
-public class CategoryRepository(AppDbContext appDbContext, IFileRepository fileRepository,IMapper mapper) : ICategoryRepository
+public class CategoryRepository(AppDbContext appDbContext, IFileRepository fileRepository)
+    : ICategoryRepository
 {
-    public BaseResponse GetAllCategories()
+    private const string Section = "Categories";
+
+    public async Task<BaseResponse> GetAllCategories()
     {
-        return new BaseResponse() { Data = appDbContext.Categories.Include(c => c.SubCategories).ToList() };
+        return new BaseResponse() { Data = await appDbContext.Categories.Include(c => c.SubCategories).ToListAsync() };
     }
 
     public BaseResponse GetCategoryProducts()
@@ -20,15 +23,39 @@ public class CategoryRepository(AppDbContext appDbContext, IFileRepository fileR
         throw new NotImplementedException();
     }
 
-    public BaseResponse AddCategory(AddCategoryDto dto)
+    public async Task<BaseResponse> AddCategory(AddCategoryDto dto)
     {
-        var category = appDbContext.Categories.Add(mapper.Map<Category>(dto));
-        return new BaseResponse() { Data = category.Entity };
+        var category = appDbContext.Categories.Add(new Category() { Title = dto.Title }).Entity;
+        await appDbContext.SaveChangesAsync();
+
+        foreach (var subCategory in dto.SubCategories ?? [])
+        {
+            string? iconPath = null;
+            // subCategory.Icon is null
+            // ? null
+            // : await fileRepository.SaveFileAsync(subCategory.Icon, Section);
+            appDbContext.SubCategories.Add(new SubCategory()
+                { CategoryId = category.Id, Title = subCategory.Title, IconPath = iconPath });
+        }
+
+        await appDbContext.SaveChangesAsync();
+        return new BaseResponse();
     }
 
-    public BaseResponse AddSubCategory(AddSubCategoryDto dto)
+    public async Task<BaseResponse> AddSubCategory(AddSubCategoryDto dto)
     {
-        var category = appDbContext.SubCategories.Add(mapper.Map<SubCategory>(dto));
-        return new BaseResponse() { Data = category.Entity };
+        var subCategory = new SubCategory()
+        {
+            CategoryId = dto.CategoryId,
+            Title = dto.Title,
+        };
+        if (dto.Icon is not null)
+        {
+            subCategory.IconPath = await fileRepository.SaveFileAsync(dto.Icon, Section);
+        }
+
+        subCategory = appDbContext.SubCategories.Add(subCategory).Entity;
+        await appDbContext.SaveChangesAsync();
+        return new BaseResponse() { Data = subCategory };
     }
 }

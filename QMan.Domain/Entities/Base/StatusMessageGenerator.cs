@@ -1,4 +1,4 @@
-namespace QMan.Infrastructure.Helpers;
+namespace QMan.Domain.Entities.Base;
 
 public static class StatusMessageGenerator
 {
@@ -6,6 +6,7 @@ public static class StatusMessageGenerator
     {
         200 => "با موفقیت انجام شد",
         404 => "آیتم یافت نشد",
+        403 => "شما به این بخش دسترسی ندارید",
         _ => ""
     };
 }

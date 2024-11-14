@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using QMan.Api.Base;
+using QMan.Api.Commons;
 using QMan.Application.Dtos.ContactUs;
 using QMan.Application.Interfaces;
 
@@ -11,6 +11,4 @@ public class HomeController(IContactUsRepository contactUsRepository) : BaseCont
     [HttpPost]
     public IActionResult NewContactUs([FromQuery] NewContactUsDto dto) =>
         new BaseResult(contactUsRepository.NewContactUs(dto));
-    
-    
 }

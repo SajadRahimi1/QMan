@@ -5,8 +5,8 @@ namespace QMan.Application.Interfaces;
 
 public interface ICategoryRepository
 {
-    BaseResponse GetAllCategories();
+    Task<BaseResponse> GetAllCategories();
     BaseResponse GetCategoryProducts();
-    BaseResponse AddCategory(AddCategoryDto dto);
-    BaseResponse AddSubCategory(AddSubCategoryDto dto);
+    Task<BaseResponse> AddCategory(AddCategoryDto dto);
+    Task<BaseResponse> AddSubCategory(AddSubCategoryDto dto);
 }

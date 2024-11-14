@@ -10,5 +10,5 @@ public class UpdateAdminDto
     public IFormFile? Image { get; set; }
     [MaxLength(11)][Required] public string PhoneNumber { get; set; }
     [MaxLength(60)][Required] public string FullName { get; set; }
-    public List<AccessEnum> Access { get; set; } = new();
+    public List<int> Access { get; set; } = new();
 }

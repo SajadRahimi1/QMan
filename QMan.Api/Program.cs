@@ -16,7 +16,8 @@ builder.Services.AddResponseCompression();
 builder.Services.AddResponseCaching();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"))
+        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(configs =>
@@ -28,8 +29,8 @@ builder.Services.AddSwaggerGen(configs =>
         Name = "Authorization",
         Type = SecuritySchemeType.ApiKey
     });
-    
-    
+
+
     configs.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {

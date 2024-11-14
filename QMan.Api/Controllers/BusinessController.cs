@@ -1,11 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using QMan.Api.Base;
+using QMan.Api.Commons;
 using QMan.Application.Dtos.Business;
 using QMan.Application.Dtos.Product;
 using QMan.Application.Interfaces;
 
 namespace QMan.Api.Controllers;
 
+[Authorize(Roles = "Business")]
 public class BusinessController(IBusinessRepository businessRepository) : BaseController
 {
     [HttpPost]
@@ -35,4 +37,8 @@ public class BusinessController(IBusinessRepository businessRepository) : BaseCo
         dto.BusinessId = UserJwtModel?.UserId;
         return new BaseResult(await businessRepository.AddProducts(dto));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetTickets() =>
+        new BaseResult(await businessRepository.GetAllTicket(UserJwtModel?.UserId ?? 0));
 }

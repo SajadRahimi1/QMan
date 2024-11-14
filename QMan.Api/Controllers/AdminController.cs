@@ -1,19 +1,24 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using QMan.Api.Base;
+using QMan.Api.Commons;
 using QMan.Application.Dtos.Admin;
 using QMan.Application.Dtos.Base;
 using QMan.Application.Dtos.Business;
+using QMan.Application.Dtos.Login;
 using QMan.Application.Dtos.Ticket;
 using QMan.Application.Interfaces;
+using QMan.Domain.Entities.Admin;
 using QMan.Infrastructure.Helpers;
 
 namespace QMan.Api.Controllers;
 
-[ApiController(), Route("[controller]/[action]"), Authorize(Roles = "Admin")]
-public class AdminController(IAdminRepository adminRepository, ITicketRepository ticketRepository,
-    ICommentRepository commentRepository) : ControllerBase
+[Authorize(Roles = "Admin")]
+public class AdminController(
+    IAdminRepository adminRepository,
+    ITicketRepository ticketRepository,
+    ICommentRepository commentRepository) : BaseController
 {
     #region Ticket
 
@@ -32,13 +37,32 @@ public class AdminController(IAdminRepository adminRepository, ITicketRepository
 
 
     [HttpPost, Consumes("multipart/form-data")]
-    public async Task<IActionResult> NewTicketMessage([FromBody] NewTicketMessageDto dto)
+    public async Task<IActionResult> NewTicketMessage([FromForm] NewTicketMessageDto dto)
     {
-        var userModel = JwtHelper.GetUser(await HttpContext.GetTokenAsync("access_token") ?? "");
-        dto.UserRole = userModel.Role;
-        dto.UserId = userModel.UserId;
+        dto.UserRole = UserRole.Admin;
+        dto.UserId = UserJwtModel?.UserId;
         return new BaseResult(await ticketRepository.NewTicketMessage(dto));
     }
+
+    #endregion
+
+    #region Admins
+
+    [HttpPost, AccessActionFilter(AccessEnum.AdminsPage)]
+    public async Task<IActionResult> GetAllAdmins([FromBody] PaginationBaseDto dto) =>
+        new BaseResult(await adminRepository.GetAllAdmins(dto));
+
+    [HttpGet, AccessActionFilter(AccessEnum.AdminsPage)]
+    public IActionResult GetAllAccess() =>
+        new BaseResult(adminRepository.GetAllAccesses());
+    
+    [HttpGet]
+    public IActionResult GetAllAdminAccess([FromQuery] int adminId) =>
+         Ok(adminRepository.GetAdminAccesses(adminId));
+
+    [HttpPost, AccessActionFilter(AccessEnum.ChangeAdminStatus)]
+    public async Task<IActionResult> ChangeAdminStatus([FromBody] ChangeAdminStatusDto dto) =>
+        new BaseResult(await adminRepository.ChangeAdminStatus(dto.AdminId));
 
     [HttpPost, Consumes("multipart/form-data")]
     public async Task<IActionResult> AddAdmin([FromForm] AddAdminDto dto) =>
@@ -47,14 +71,6 @@ public class AdminController(IAdminRepository adminRepository, ITicketRepository
     [HttpPut, Consumes("multipart/form-data")]
     public async Task<IActionResult> UpdateAdmin([FromForm] UpdateAdminDto dto) =>
         new BaseResult(await adminRepository.UpdateAdmin(dto));
-
-    #endregion
-
-    #region Admins
-
-    [HttpPost]
-    public async Task<IActionResult> GetAllAdmins([FromBody] PaginationBaseDto dto) =>
-        new BaseResult(await adminRepository.GetAllAdmins(dto));
 
     #endregion
 
@@ -90,15 +106,32 @@ public class AdminController(IAdminRepository adminRepository, ITicketRepository
 
     #endregion
 
-    #region Test Token
+    #region Login
 
-    [HttpGet, AllowAnonymous]
-    public IActionResult GetToken() =>
-        Ok(JwtHelper.GenerateToken(new UserJwtModel() { UserId = 1, Role = UserRole.Admin }));
+    [HttpPost, AllowAnonymous]
+    public async Task<IActionResult> SendCode([FromBody] SendCodeDto dto) =>
+        new BaseResult(await adminRepository.SendCode(dto));
 
-    [HttpGet, AllowAnonymous]
-    public IActionResult TranslateToken([FromQuery] string token) =>
-        Ok(JwtHelper.GetUser(token));
+    [HttpPost, AllowAnonymous]
+    public IActionResult CheckCode([FromBody] CheckCodeDto dto)
+    {
+        var result = adminRepository.CheckCode(dto);
+        if (result.StatusCode == 200)
+        {
+            if (int.TryParse(result.Data?.ToString(), out var userId))
+                result.Token = JwtHelper.GenerateToken(new UserJwtModel() { UserId = userId, Role = UserRole.Admin });
+        }
+
+        return new BaseResult(result);
+    }
+
+    #endregion
+
+    #region ContactUs
+
+    [HttpGet]
+    public IActionResult GetAllContactUs() =>
+        new BaseResult(adminRepository.GetAllAccesses());
 
     #endregion
 }

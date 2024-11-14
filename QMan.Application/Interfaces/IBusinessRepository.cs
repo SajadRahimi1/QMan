@@ -14,4 +14,5 @@ public interface IBusinessRepository
     BaseResponse CheckCode(CheckCodeDto dto);
     Task<BaseResponse> UpdateInformation(UpdateBusinessDto dto);
     Task<BaseResponse> UpdateAddress(UpdateAddressDto dto);
+     Task<BaseResponse> GetAllTicket(int businessId);
 }

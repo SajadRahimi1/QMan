@@ -12,7 +12,8 @@ public abstract class BaseController : Controller
 
     public override void OnActionExecuting(ActionExecutingContext context)
     {
-        UserJwtModel = JwtHelper.GetUser(HttpContext.Request.Headers.Authorization);
+        var token = HttpContext.Request.Headers.Authorization.ToString().Split(" ").Last();
+        UserJwtModel = JwtHelper.GetUser(token);
         base.OnActionExecuting(context);
     }
 }

@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using QMan.Domain.Entities.Base;
 
 namespace QMan.Domain.Entities.Admin;
@@ -9,5 +11,6 @@ public class Admin : BaseEntity
     [MaxLength(11)] public string PhoneNumber { get; set; }
     [MaxLength(60)] public string FullName { get; set; }
     public bool IsActive { get; set; } = true;
-    public List<AccessEnum> Access { get; set; } = new();
+
+    [JsonIgnore] public List<Access> Access { get; set; } = new();
 }

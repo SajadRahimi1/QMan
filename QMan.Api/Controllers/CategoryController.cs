@@ -1,17 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
-using QMan.Api.Base;
+using QMan.Api.Commons;
 using QMan.Application.Dtos.Category;
 using QMan.Application.Dtos.ContactUs;
 using QMan.Application.Interfaces;
 
 namespace QMan.Api.Controllers;
 
-[ApiController, Route("[controller]/[action]")]
-public class CategoryController(ICategoryRepository categoryRepository) : ControllerBase
+
+public class CategoryController(ICategoryRepository categoryRepository) : BaseController
 {
-    [HttpPost, Consumes("multipart/form-data")]
-    public IActionResult NewCategory([FromForm] AddCategoryDto dto) =>
-        new BaseResult(categoryRepository.AddCategory(dto));
-    
-    
+    [HttpPost]
+    // [Consumes("multipart/form-data")]
+    public async Task<IActionResult> NewCategory([FromBody] AddCategoryDto dto) =>
+        new BaseResult(await categoryRepository.AddCategory(dto));
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllCategories() =>
+        new BaseResult(await categoryRepository.GetAllCategories());
 }

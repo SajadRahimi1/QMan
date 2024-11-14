@@ -32,7 +32,7 @@ public class FileRepository : IFileRepository
             Directory.CreateDirectory($"{UploadDirectory}/{section}");
         }
 
-        var uniqueFilename = file.FileName.Split('.').First() + "_" + Guid.NewGuid() + "." +
+        var uniqueFilename = Guid.NewGuid() + "." +
                              file.FileName.Split('.').Last();
         var path = Path.Combine(UploadDirectory, section, uniqueFilename);
         await file.CopyToAsync(new FileStream(path, FileMode.Create));

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
-using QMan.Api.Base;
+using QMan.Api.Commons;
 using QMan.Application.Dtos.Base;
 using QMan.Application.Dtos.Login;
 using QMan.Application.Interfaces;
@@ -22,7 +22,7 @@ public class LoginController(IBusinessRepository businessRepository) : BaseContr
         if (result.StatusCode == 200)
         {
             if (TryParse(result.Data?.ToString(), out var userId))
-                result.Token = JwtHelper.GenerateToken(new UserJwtModel() { UserId = userId ,Role = UserRole.User });
+                result.Token = JwtHelper.GenerateToken(new UserJwtModel() { UserId = userId ,Role = UserRole.Business });
         }
         
         return new BaseResult(result);

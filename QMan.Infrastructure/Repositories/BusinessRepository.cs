@@ -88,4 +88,20 @@ public class BusinessRepository(AppDbContext appDbContext, IMapper mapper, ICach
         await appDbContext.SaveChangesAsync();
         return new BaseResponse() { Data = address };
     }
+    
+    public async Task<BaseResponse> GetAllTicket(int businessId)
+    {
+        var ticket = await appDbContext.Tickets.AsSplitQuery().Include(b => b.Business).AsSplitQuery().AsNoTracking()
+            .Select(t => new
+            {
+                t.Id,
+                t.BusinessId,
+                t.Business.Title,
+                t.Status,
+                t.Subject,
+                t.UpdateDateTime,
+            }).ToListAsync();
+
+        return new BaseResponse() { Data = ticket };
+    }
 }

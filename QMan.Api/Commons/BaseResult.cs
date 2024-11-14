@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using QMan.Domain.Entities.Base;
 
-namespace QMan.Api.Base;
+namespace QMan.Api.Commons;
 
 public class BaseResult(BaseResponse response) : IActionResult
 {

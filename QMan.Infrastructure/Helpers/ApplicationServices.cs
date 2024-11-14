@@ -23,12 +23,13 @@ public static class ApplicationServices
         services.AddMemoryCache();
         services.AddSingleton<ICacheService,MemoryCacheService>();
         services.AddScoped<IAdminRepository, AdminRepository>();
-        // services.AddScoped<IBusinessRepository, Busin>();
+        
         services.AddScoped<ICommentRepository, CommentRepository>();
         services.AddScoped<IContactUsRepository, ContactUsRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IBusinessRepository, BusinessRepository>();
-        //services.AddScoped<IProductRepository, ProductRe>();
+        services.AddScoped<IProductRepository, ProductRepository>();
+        
 
         #region Register JWT
 

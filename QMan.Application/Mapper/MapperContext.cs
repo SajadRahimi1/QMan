@@ -15,10 +15,10 @@ public class MapperContext:Profile
     public MapperContext()
     {
         CreateMap<AddAdminDto, Admin>();
+        CreateMap<UpdateAdminDto, Admin>();
         CreateMap<UpdateAddressDto, Address>();
         CreateMap<AddCategoryDto, Category>();
         CreateMap<AddSubCategoryDto, SubCategory>();
         CreateMap<AddProductDto, Product>();
-        CreateMap<UpdateAddressDto, Address>();
     }
 }
