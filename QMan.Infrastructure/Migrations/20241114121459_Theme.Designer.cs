@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QMan.Infrastructure.Contexts;
 
@@ -11,9 +12,11 @@ using QMan.Infrastructure.Contexts;
 namespace QMan.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241114121459_Theme")]
+    partial class Theme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -357,34 +360,6 @@ namespace QMan.Infrastructure.Migrations
                     b.ToTable("Otps");
                 });
 
-            modelBuilder.Entity("QMan.Domain.Entities.Plans.Plan", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("CreatedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ExpirationDay")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Price")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdateDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Plans");
-                });
-
             modelBuilder.Entity("QMan.Domain.Entities.Product.BaseProduct", b =>
                 {
                     b.Property<int>("Id")
@@ -480,7 +455,7 @@ namespace QMan.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Themes");
+                    b.ToTable("Theme");
                 });
 
             modelBuilder.Entity("QMan.Domain.Entities.Theme.ThemeColor", b =>
@@ -512,7 +487,7 @@ namespace QMan.Infrastructure.Migrations
 
                     b.HasIndex("ThemeId");
 
-                    b.ToTable("ThemeColors");
+                    b.ToTable("ThemeColor");
                 });
 
             modelBuilder.Entity("QMan.Domain.Entities.Ticket.Ticket", b =>

@@ -6,6 +6,7 @@ using QMan.Domain.Entities.Category;
 using QMan.Domain.Entities.Comment;
 using QMan.Domain.Entities.ContactUs;
 using QMan.Domain.Entities.Otp;
+using QMan.Domain.Entities.Plans;
 using QMan.Domain.Entities.Product;
 using QMan.Domain.Entities.Theme;
 using QMan.Domain.Entities.Ticket;
@@ -37,6 +38,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Access>().HasKey(u => u.Id);
         modelBuilder.Entity<Theme>().HasKey(u => u.Id);
         modelBuilder.Entity<ThemeColor>().HasKey(u => u.Id);
+        modelBuilder.Entity<Plan>().HasKey(u => u.Id);
 
         modelBuilder.Entity<Ticket>().HasMany(t => t.Messages).WithOne(tm => tm.Ticket)
             .HasForeignKey(tm => tm.TicketId);
@@ -93,4 +95,7 @@ public class AppDbContext : DbContext
     public DbSet<BaseProduct> BaseProducts { get; set; }
     public DbSet<Otp> Otps { get; set; }
     public DbSet<Access> Accesses { get; set; }
+    public DbSet<Plan> Plans { get; set; }
+    public DbSet<Theme> Themes { get; set; }
+    public DbSet<ThemeColor> ThemeColors { get; set; }
 }
