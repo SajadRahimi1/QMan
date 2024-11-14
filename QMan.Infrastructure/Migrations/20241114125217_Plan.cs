@@ -70,6 +70,17 @@ namespace QMan.Infrastructure.Migrations
                 principalTable: "Themes",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.Sql(@"
+SET IDENTITY_INSERT QMan.dbo.Plans ON
+GO
+
+INSERT INTO QMan.dbo.Plans (Id, Title, ExpirationDay, Price, CreatedDateTime, UpdateDateTime) VALUES (1, N'1 ماهه', 30, N'0', N'2024-11-14 16:23:25.0000000', null);
+INSERT INTO QMan.dbo.Plans (Id, Title, ExpirationDay, Price, CreatedDateTime, UpdateDateTime) VALUES (2, N'3 ماهه', 90, N'1200000', N'2024-11-14 16:24:09.0000000', null);
+INSERT INTO QMan.dbo.Plans (Id, Title, ExpirationDay, Price, CreatedDateTime, UpdateDateTime) VALUES (3, N'6 ماهه', 180, N'2400000', N'2024-11-14 16:24:36.0000000', null);
+INSERT INTO QMan.dbo.Plans (Id, Title, ExpirationDay, Price, CreatedDateTime, UpdateDateTime) VALUES (4, N'12 ماهه', 360, N'4400000', N'2024-11-14 16:25:17.0000000', null);
+
+");
         }
 
         /// <inheritdoc />
