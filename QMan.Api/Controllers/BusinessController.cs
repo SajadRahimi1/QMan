@@ -24,7 +24,11 @@ public class BusinessController(IBusinessRepository businessRepository) : BaseCo
         return new BaseResult(await businessRepository.UpdateAddress(dto));
     }
 
-    [HttpPost]
+    /// <summary>
+    /// اضافه کردن یک محصول شخصی ساز جدید برای کسب و کار
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost, Consumes("multipart/form-data")]
     public async Task<IActionResult> AddProduct([FromBody] AddProductDto dto)
     {
         dto.BusinessId = UserJwtModel?.UserId;
@@ -41,4 +45,26 @@ public class BusinessController(IBusinessRepository businessRepository) : BaseCo
     [HttpGet]
     public async Task<IActionResult> GetTickets() =>
         new BaseResult(await businessRepository.GetAllTicket(UserJwtModel?.UserId ?? 0));
+    
+    /// <summary>
+    /// انتخاب تم برای کسب و کار ها 
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <returns></returns>
+    [HttpPost]
+    public async Task<IActionResult> SelectTheme([FromBody] SelectThemeDto dto)
+    {
+        dto.BusinessId = UserJwtModel?.UserId??0;
+        return new BaseResult(await businessRepository.SelectTheme(dto));
+    }
+
+    /// <summary>
+    /// دریافت تم همراه با رنگ هاشون
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet,AllowAnonymous]
+    public IActionResult GetThemes() =>
+        new BaseResult( businessRepository.GetAllThemes());
+
+
 }

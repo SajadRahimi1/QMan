@@ -12,11 +12,20 @@ using QMan.Infrastructure.Contexts;
 
 namespace QMan.Infrastructure.Repositories;
 
-public class BusinessRepository(AppDbContext appDbContext, IMapper mapper, ICacheService cacheService)
+public class BusinessRepository(
+    AppDbContext appDbContext,
+    IMapper mapper,
+    ICacheService cacheService,
+    IFileRepository fileRepository)
     : IBusinessRepository
 {
     public async Task<BaseResponse> AddProduct(AddProductDto dto)
     {
+        if (dto.Image is not null)
+        {
+            dto.ImagePath = await fileRepository.SaveFileAsync(dto.Image, "Product");
+        }
+
         var savedProduct = appDbContext.Products.Add(mapper.Map<Product>(dto));
         await appDbContext.SaveChangesAsync();
         return new BaseResponse() { Data = savedProduct.Entity };
@@ -88,7 +97,7 @@ public class BusinessRepository(AppDbContext appDbContext, IMapper mapper, ICach
         await appDbContext.SaveChangesAsync();
         return new BaseResponse() { Data = address };
     }
-    
+
     public async Task<BaseResponse> GetAllTicket(int businessId)
     {
         var ticket = await appDbContext.Tickets.AsSplitQuery().Include(b => b.Business).AsSplitQuery().AsNoTracking()
@@ -103,5 +112,36 @@ public class BusinessRepository(AppDbContext appDbContext, IMapper mapper, ICach
             }).ToListAsync();
 
         return new BaseResponse() { Data = ticket };
+    }
+
+    public BaseResponse GetAllThemes()
+    {
+        var themes = appDbContext.Themes.Include(t => t.ThemeColors).Select(t => new
+        {
+            t.Id,
+            t.EnglishTitle,
+            t.PersianTitle,
+            ThemeColors = t.ThemeColors.Select(tc => new
+            {
+                tc.Id,
+                tc.EnglishTitle,
+                tc.PersianTitle,
+            })
+        }).ToList();
+        return new BaseResponse() { Data = themes };
+    }
+
+    public async Task<BaseResponse> SelectTheme(SelectThemeDto dto)
+    {
+        var business = await appDbContext.Businesses.FirstOrDefaultAsync(b => b.Id == dto.BusinessId);
+        if (business is null) return new BaseResponse() { StatusCode = 404 };
+
+        var themeColor = await appDbContext.ThemeColors.FirstOrDefaultAsync(tc => tc.Id == dto.ThemeColorId);
+        if (themeColor is null) return new BaseResponse() { StatusCode = 404, MessageSetter = "تم انخاب شده یافت نشد" };
+
+        business.SelectedThemeColorId = dto.ThemeColorId;
+        appDbContext.Businesses.Update(business);
+        await appDbContext.SaveChangesAsync();
+        return new BaseResponse();
     }
 }

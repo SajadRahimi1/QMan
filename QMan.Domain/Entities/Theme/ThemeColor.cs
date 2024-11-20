@@ -9,4 +9,5 @@ public class ThemeColor:BaseEntity
     [MaxLength(50)] public string? PersianTitle { get; set; }
     public Theme Theme { get; set; }
     public int ThemeId { get; set; }
+    public ICollection<Business.Business> BusinessesSelected { get; set; } = [];
 }

@@ -9,6 +9,7 @@ public class Product : BaseEntity
 {
     [MaxLength(50)] public string Title { get; set; }
     [MaxLength(20)] public string? Price { get; set; }
+    [MaxLength(60)] public string? ImagePath { get; set; }
     public int SubcategoryId { get; set; }
     [JsonIgnore] public virtual SubCategory SubCategory { get; set; }
 

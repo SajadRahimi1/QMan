@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,7 @@ builder.Services.AddControllers()
 builder.Services.AddResponseCompression();
 builder.Services.AddResponseCaching();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContextPool<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"))
         .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution));
 
@@ -30,6 +31,9 @@ builder.Services.AddSwaggerGen(configs =>
         Type = SecuritySchemeType.ApiKey
     });
 
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    configs.IncludeXmlComments(xmlPath);
 
     configs.AddSecurityRequirement(new OpenApiSecurityRequirement
     {

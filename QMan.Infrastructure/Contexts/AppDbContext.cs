@@ -62,6 +62,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Access>().HasMany(p => p.Admins).WithMany(b => b.Access);
         modelBuilder.Entity<Theme>().HasMany(t => t.ThemeColors).WithOne(tc => tc.Theme)
             .HasForeignKey(tc => tc.ThemeId);
+        modelBuilder.Entity<Business>().HasOne(b => b.ThemeColor).WithMany(tc => tc.BusinessesSelected)
+            .HasForeignKey(b => b.SelectedThemeColorId);
     }
 
     public override int SaveChanges()

@@ -8,6 +8,5 @@ public class Theme : BaseEntity
 {
     [MaxLength(50)] public string? EnglishTitle { get; set; }
     [MaxLength(50)] public string? PersianTitle { get; set; }
-    [JsonIgnore] public virtual ICollection<ThemeColor> ThemeColors { get; set; } = [];
-
+    public virtual ICollection<ThemeColor> ThemeColors { get; set; } = [];
 }
