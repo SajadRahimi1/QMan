@@ -20,6 +20,11 @@ builder.Services.AddDbContextPool<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"))
         .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution));
 
+builder.Services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
+{
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+}));
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(configs =>
 {
@@ -76,7 +81,7 @@ app.UseStaticFiles(new StaticFileOptions()
     RequestPath = new PathString("/uploads"),
     OnPrepareResponse = context => { context.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*"); }
 });
-
+app.UseCors("ApiCorsPolicy");
 app.MapControllers();
 app.UseResponseCaching();
 app.UseResponseCompression();
