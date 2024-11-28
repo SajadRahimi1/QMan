@@ -12,4 +12,5 @@ public class AddProductDto
     [JsonIgnore] public int? BusinessId { get; set; }
     [JsonIgnore] public string? ImagePath { get; set; }
     public IFormFile? Image { get; set; }
+    [MaxLength(200)] public string? Description { get; set; }
 }

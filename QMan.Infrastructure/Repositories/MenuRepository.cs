@@ -60,12 +60,12 @@ public class MenuRepository(AppDbContext appDbContext) : IMenuRepository
             subcategory.Products.AddRange(business.Products.Where(p => p.SubcategoryId == subcategory.SubCategoryId)
                 .Select(p => new Products()
                 {
-                    Title = p.Title, Price = p.Price, ImagePath = p.ImagePath
+                    Title = p.Title, Price = p.Price, ImagePath = p.ImagePath,Description=p.Description
                 }));
             subcategory.Products.AddRange(business.BaseProducts.Where(p => p.SubcategoryId == subcategory.SubCategoryId)
                 .Select(p => new Products()
                 {
-                    Title = p.Title, Price = p.Price, ImagePath = p.ImagePath
+                    Title = p.Title, Price = p.Price, ImagePath = p.ImagePath,Description=""
                 }));
         }
 

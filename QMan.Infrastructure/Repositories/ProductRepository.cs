@@ -22,6 +22,7 @@ public class ProductRepository(AppDbContext appDbContext) : IProductRepository
             Price = dto.Price,
             Title = dto.Title,
             BusinessId = dto.BusinessId ?? 0,
+            Description = dto.Description
         });
 
         await appDbContext.SaveChangesAsync();
