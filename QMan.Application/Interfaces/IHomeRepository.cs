@@ -4,8 +4,8 @@ using QMan.Domain.Entities.Base;
 
 namespace QMan.Application.Interfaces;
 
-public interface IContactUsRepository
+public interface IHomeRepository
 {
     BaseResponse NewContactUs(NewContactUsDto dto);
-    BaseResponse GetAllContactUs(PaginationBaseDto dto);
+    BaseResponse GetAllPlans();
 }

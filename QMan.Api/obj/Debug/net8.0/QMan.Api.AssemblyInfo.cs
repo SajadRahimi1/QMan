@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QMan.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cf911c54f8d8532d267b31c81c742f8c11d676e6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d777f6fdbe81579dcd9cbc333f5739f37cdc7985")]
 [assembly: System.Reflection.AssemblyProductAttribute("QMan.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QMan.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

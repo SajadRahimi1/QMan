@@ -25,10 +25,11 @@ public static class ApplicationServices
         services.AddScoped<IAdminRepository, AdminRepository>();
         
         services.AddScoped<ICommentRepository, CommentRepository>();
-        services.AddScoped<IContactUsRepository, ContactUsRepository>();
+        services.AddScoped<IHomeRepository, HomeRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IBusinessRepository, BusinessRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IMenuRepository, MenuRepository>();
         
 
         #region Register JWT

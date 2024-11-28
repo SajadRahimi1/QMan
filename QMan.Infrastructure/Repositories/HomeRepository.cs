@@ -8,7 +8,7 @@ using QMan.Infrastructure.Contexts;
 
 namespace QMan.Infrastructure.Repositories;
 
-public class ContactUsRepository(AppDbContext appDbContext):IContactUsRepository
+public class HomeRepository(AppDbContext appDbContext):IHomeRepository
 {
     public BaseResponse NewContactUs(NewContactUsDto dto)
     {
@@ -21,6 +21,10 @@ public class ContactUsRepository(AppDbContext appDbContext):IContactUsRepository
         appDbContext.SaveChanges();
         return new BaseResponse();
     }
+
+    public BaseResponse GetAllPlans()=>
+         new BaseResponse() { Data = appDbContext.Plans.ToList() };
+    
 
     public BaseResponse GetAllContactUs(PaginationBaseDto dto)
     {
