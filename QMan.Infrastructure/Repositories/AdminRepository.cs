@@ -170,7 +170,7 @@ public class AdminRepository(
         cacheService.Set(dto.PhoneNumber, code.ToString(), TimeSpan.FromMinutes(3));
 
         // todo: send code to sms provider
-        return new BaseResponse();
+        return new BaseResponse(){Data = code};
     }
 
     public BaseResponse CheckCode(CheckCodeDto dto)

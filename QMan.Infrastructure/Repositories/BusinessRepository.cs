@@ -53,7 +53,7 @@ public class BusinessRepository(
         cacheService.Set(dto.PhoneNumber, code.ToString(), TimeSpan.FromMinutes(3));
 
         // todo: send code to sms provider
-        return Task.FromResult(new BaseResponse());
+        return Task.FromResult(new BaseResponse(){Data = code});
     }
 
     public BaseResponse CheckCode(CheckCodeDto dto)
