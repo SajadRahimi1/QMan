@@ -23,6 +23,7 @@ builder.Services.AddDbContextPool<AppDbContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(configs =>
 {
+    
     configs.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
@@ -54,11 +55,17 @@ builder.Services.AddSwaggerGen(configs =>
 
 var app = builder.Build();
 
-// if (app.Environment.IsDevelopment())
-// {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-// }
+app.UseSwagger(c =>
+{
+    c.RouteTemplate = "api/swagger/{documentname}/swagger.json";
+});
+
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "My Cool API V1");
+    c.RoutePrefix = "api/swagger";
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -76,4 +83,5 @@ app.UseResponseCompression();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UsePathBase("/api");
 app.Run();

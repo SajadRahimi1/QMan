@@ -5,7 +5,7 @@ using QMan.Infrastructure.Helpers;
 
 namespace QMan.Api.Controllers;
 
-[ApiController, Route("[controller]/[action]")]
+[ApiController, Route("api/[controller]/[action]")]
 public abstract class BaseController : Controller
 {
     protected UserJwtModel? UserJwtModel;
